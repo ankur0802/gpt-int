@@ -1,16 +1,15 @@
 import { chatbotPrompt } from "@/helpers/constants/chatbot-prompt";
 import { ChatGPTMessage, OpenAIStream, OpenAIStreamPayload } from "@/lib/openai-stream";
 import { MesageArraySchema } from "@/lib/validators/message";
-
-export async function POST(req:Request){
-  
-    const {messages} = await req.json();
-
-    
-
-    const parsedMessages = MesageArraySchema.parse(messages)
+import { NextResponse } from "next/server";
  
 
+export async function POST(req:Request){
+ 
+    const {messages} = await req.json();
+ 
+    const parsedMessages = MesageArraySchema.parse(messages)
+ 
     const outboundMessages: ChatGPTMessage[] = parsedMessages.map((message)=>({
 
         role: message.isUserMessage? 'user': 'system',
@@ -35,7 +34,10 @@ export async function POST(req:Request){
     }
 
     const stream = await OpenAIStream(payload)
+    console.log(stream);
+    
+    return NextResponse.json(stream)
    
-    return new Response(stream)
+    // return new Response(stream)
 
 }

@@ -6,7 +6,7 @@ import { useMutation } from '@tanstack/react-query'
 import { nanoid } from 'nanoid'
 import { FC, HTMLAttributes, useRef, useState } from 'react'
 import ReactTextareaAutosize from 'react-textarea-autosize'
-
+import { headers } from 'next/headers';
 interface ChatInputProps extends HTMLAttributes<HTMLDivElement> {
   
 }
@@ -26,7 +26,7 @@ const ChatInput: FC<ChatInputProps> = ({className, ...props}) => {
             },
             body: JSON.stringify({messages:[message] })
         })
-        console.log("r" + response);
+ 
         
         return response.body;
     },

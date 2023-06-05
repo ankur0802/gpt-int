@@ -1,3 +1,4 @@
+
 import { createParser, ParsedEvent, ReconnectInterval } from "eventsource-parser"
 
 
@@ -36,8 +37,7 @@ export async function OpenAIStream(payload:OpenAIStreamPayload){
         },
         body: JSON.stringify(payload)
     })
- 
-    
+
     const stream = new ReadableStream({
         async start(controller){
        
@@ -55,7 +55,6 @@ export async function OpenAIStream(payload:OpenAIStreamPayload){
                         console.log(json);
                         const text = json.choices[0].delta?.content || " "
 
-
                         if(counter < 2 &&  (text.match(/\n/) || []).length){
                             return
                         }
@@ -64,8 +63,7 @@ export async function OpenAIStream(payload:OpenAIStreamPayload){
                         controller.enqueue(queue)
 
                         counter ++
-                        
-                        
+
                     } catch (error) {
                         controller.error(error)
                         
